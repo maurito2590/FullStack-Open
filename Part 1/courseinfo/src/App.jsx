@@ -13,7 +13,7 @@ const Header = (props) => {
 }
 
 
-// Make *Content* componen
+// Make *Content* component
 const Content = (props) => {
   
   console.log(props)
