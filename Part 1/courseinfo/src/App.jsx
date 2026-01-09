@@ -1,7 +1,7 @@
 // Make header
 const Header = (props) => {
 
-  console.log('Renderizado!', props)
+  console.log('Rendered!', props)
 
   return (
     <>
@@ -37,7 +37,7 @@ const Content = (props) => {
 //Make *Total* component
 const Total = (props) => {
   
-  console.log('Array del total', props)
+  console.log('Total', props)
 
   return (
 
@@ -47,7 +47,6 @@ const Total = (props) => {
 
   )
 }
-
 
 
 const App = () => {
@@ -88,6 +87,8 @@ const App = () => {
       parts = {course.parts}
       />
     </div>
+
+    
   )
 }
 
