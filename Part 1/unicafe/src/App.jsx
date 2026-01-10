@@ -9,52 +9,44 @@ const Button = ({ handleClick, text }) => {
 };
 
 
-const Statics = ({static: s}) => {
+const StatisticLine = ({ text, value }) => (
 
-  const total = Object.values(s).reduce((acc, val) => acc + val, 0)
-  const arr = Object.entries(s)
-  const average = arr[0][1] * 1 + arr[2][1] * -1
+<tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 
-  const names = Object.keys(s).map(key => key.charAt().toUpperCase()+key.slice(1)+': ');
-  const count = Object.values(s)
+)
 
+
+const Statistics = ({ good, neutral, bad }) => {
+
+  const total = good + neutral + bad
+  const average = (good - bad) / total
+  const positive = (good / total) * 100
+
+  console.log('Total: ', total);
 
   if (total === 0) {
-
-    return (
-      <p>
-      No feedback given.
-    </p>
-    )
+    return <p>No feedback given</p>
   }
-    
-    return (
-      <div>
-        <p>
-          {names[0]} {count[0]}
-        </p>
-        <p>
-          {names[1]} {count[1]}
-        </p>
-        <p>
-          {names[2]} {count[2]}
-        </p>
-        <p>
-          Total: {total}
-        </p>
-        <p>
-          Average: {average / total}
-        </p>
-        <p>
-          Positive: {count[0] / total * 100}
-        </p>
 
-      </div>
+
+  return (
+    <div>
+      <table>
+        <tbody>
+      <StatisticLine text="Good" value={good} />
+      <StatisticLine text="Neutral" value={neutral} />
+      <StatisticLine text="Bad" value={bad} />
+      <StatisticLine text="Total" value={total} />
+      <StatisticLine text="Average" value={average.toFixed(1)} />
+      <StatisticLine text="Positive" value={positive.toFixed(1) + ' %'} />
+        </tbody>
+      </table>
+    </div>
   )
-
-
 }
-  
 
 
 const App = () => {
@@ -74,6 +66,7 @@ const App = () => {
     const updateGood = feedback.good + 1
     console.log('Good: ', updateGood)
     setFeedback({...feedback, good: updateGood})
+    setTotal(total + 1);
   };
 
   const handleClickBad = () => {
@@ -95,11 +88,10 @@ const App = () => {
     <div>
       <h2>Give feedback</h2>
       <Button handleClick={handleClickGood} text={"Good"} />
-      <Button handleClick={handleClickNeutral} text={"neutral"} />
+      <Button handleClick={handleClickNeutral} text={"Neutral"} />
       <Button handleClick={handleClickBad} text={"Bad"} />
-      <h2>Statics</h2>
-      < Statics static={feedback} />
-
+      <h2>Statistics</h2>
+      < Statistics {...feedback} />
     </div>
   );
 };
