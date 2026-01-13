@@ -7,6 +7,7 @@ import Note from './components/Note'
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes);
   const [newNote, setNewNote] = useState('a new note...')
+  const [showAll, setShowAll] = useState(true)
 
   const addNote = (event) => {
     event.preventDefault()
@@ -18,10 +19,11 @@ const App = (props) => {
 
     setNotes(notes.concant(noteObject))
     setNotes('')
-
-
-    console.log('Evento capturado:>> ', event.target);
   }
+
+      const notesToShow = showAll
+      ? notes
+      : notes.filter(note => note.important === true)
 
 
   const handleNoteChange = (event) => {
@@ -32,8 +34,13 @@ const App = (props) => {
   return (
     <div>
       <h1>Notes</h1>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          Show {showAll ? 'Important' : 'All'}
+        </button>
+      </div>
       <ul>
-        {notes.map(note => 
+        {notesToShow.map(note => 
           <Note key={note.id} note={note} />
         )}
       </ul>
