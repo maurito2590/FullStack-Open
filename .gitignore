@@ -1,0 +1,18 @@
+# Permitir el propio .gitignore
+!.gitignore
+
+# Permitir carpeta training y todo su contenido
+!/training/*
+
+# Dentro de training, ignorar dependencias y builds
+/training/**/node_modules/
+/training/**/dist/
+/training/**/dist-ssr/
+/training/**/.DS_Store
+/training/**/.env
+/part0
+/part1
+/part2
+/part3
+/part4
+/part5
