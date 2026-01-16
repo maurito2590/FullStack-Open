@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // Component
-const PersonForm = ({ data, onUpdate }) => {
+const PersonForm = ({ data, onAdd, onUpdate }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -31,14 +31,9 @@ const PersonForm = ({ data, onUpdate }) => {
         personObject.name === "" && personObject.number === ""
           ? "Empty fields!"
           : personObject.name === ""
-          ? "Name field is empty"
-          : "Number field is empty"
+            ? "Name field is empty"
+            : "Number field is empty"
       );
-      return;
-    }
-
-    if (names.includes(personObject.name.toLowerCase())) {
-      alert(`${personObject.name} is already added to phonebook!`);
       return;
     }
 
@@ -46,7 +41,24 @@ const PersonForm = ({ data, onUpdate }) => {
       alert(`${personObject.number} is already added to phonebook!`);
       return;
     }
-    onUpdate(personObject);
+
+    if (names.includes(personObject.name.toLowerCase())) {
+      if (
+        window.confirm(
+          `${personObject.name} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        onUpdate(personObject);
+        setNewName("");
+        setNewNumber("");
+      } else {
+        alert(`${personObject.name} is already added to phonebook!`);
+      }
+
+      return;
+    }
+
+    onAdd(personObject);
     setNewName("");
     setNewNumber("");
   };

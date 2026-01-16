@@ -8,7 +8,7 @@ const Filter = ({onFilterUpdate}) => {
 
   return (
     <div>
-      Filter show with:
+      Filter shown with:
       <input type="text" onChange={handleFilter} />
     </div>
   );

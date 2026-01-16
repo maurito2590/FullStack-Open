@@ -19,7 +19,8 @@ const App = () => {
   const [ filter, setFilter] = useState('')
 
   // Add handler
-  const handleUpdate = (personObject) => {
+  const handleAdd = (personObject) => {
+
     personService
       .create(personObject)
       .then(newPerson => {
@@ -27,13 +28,28 @@ const App = () => {
       })
   }
 
-  //Remove handler
+  // Remove handler
   const handleRemove = person => {
 
     personService
       .remove(person.id)
       .then((data) => {
         setPersons(persons.filter(item => item.id !== data.id))
+      })
+  }
+
+  // Update handler
+  const handleUpdate = personId => {
+
+    const personToChange = persons.find((element) => element.name === personId.name)
+
+    personService
+      .update(personToChange.id, personId)
+      .then(() => {
+        return personService.getAll();
+      })
+      .then(data => {
+        setPersons(data)
       })
   }
 
@@ -48,7 +64,7 @@ const App = () => {
       <h1>Phonebook</h1>
       < Filter data={persons} onFilterUpdate={handleFilterUpdate} />
       <h2>Add a new</h2>
-        < PersonForm data={persons} onUpdate={handleUpdate} />
+        < PersonForm data={persons} onAdd={handleAdd} onUpdate={handleUpdate} />
       <div>
         <h2>Numbers</h2>
         < Persons list={persons} filter={filter} onRemove={handleRemove} />
