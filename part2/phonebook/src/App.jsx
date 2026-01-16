@@ -18,12 +18,22 @@ const App = () => {
 
   const [ filter, setFilter] = useState('')
 
-  // Data handler
+  // Add handler
   const handleUpdate = (personObject) => {
     personService
       .create(personObject)
       .then(newPerson => {
-        setPersons(prevPerson => prevPerson.concat(newPerson))
+        setPersons(prevPerson => prevPerson.concat(newPerson));
+      })
+  }
+
+  //Remove handler
+  const handleRemove = person => {
+
+    personService
+      .remove(person.id)
+      .then((data) => {
+        setPersons(persons.filter(item => item.id !== data.id))
       })
   }
 
@@ -41,7 +51,7 @@ const App = () => {
         < PersonForm data={persons} onUpdate={handleUpdate} />
       <div>
         <h2>Numbers</h2>
-        < Persons list={persons} filter={filter} />
+        < Persons list={persons} filter={filter} onRemove={handleRemove} />
       </div>
     </div>
   );
