@@ -23,7 +23,6 @@ const PersonForm = ({ data, onUpdate }) => {
     const personObject = {
       name: capitalizedName(newName),
       number: newNumber,
-      id: data.length + 1,
     };
 
     // Validations
@@ -47,7 +46,6 @@ const PersonForm = ({ data, onUpdate }) => {
       alert(`${personObject.number} is already added to phonebook!`);
       return;
     }
-
     onUpdate(personObject);
     setNewName("");
     setNewNumber("");
